@@ -1,0 +1,1265 @@
+-----------------------------------------------------------------------------------------------------------------------
+Sum All Numbers in a Range
+
+
+//challenge
+
+We'll pass you an array of two numbers. Return the sum of those two numbers plus the sum of all the numbers between them. The lowest number will not always come first.
+
+
+function sumAll(arr) {
+  return 1;
+
+}
+sumAll([1, 4]);
+
+
+
+
+-this is a bit like factorialize algo we wrote before in that we need to act on a range 
+-so we need to return the sum of the numbers in array inclusive
+For example, sumAll([4,1]) should return 10 because sum of all the numbers between 1 and 4 (both inclusive) is 10.
+- so that's 1 + 2 + 3 + 4 = 10
+
+
+
+
+
+//solution 
+
+- We need a way to get the range of numbers between our two params, sum them together and assign that to a variable that is returned as the solution.
+- We can use Math.max() and Math.min() to find the max/min value of two numbers then use a for loop to iterate through numbers between in increments of +1 - this means we can disregard the value order of numbers in the array.
+- 
+
+
+//declare maxNum and minNum range end variables within function
+
+  let maxNum = Math.max(arr[0], arr[1]);
+  let minNum = Math.min(arr[0], arr[1]);
+
+//declare the var to store the sum of the range
+let rangeSum = 0;
+
+
+//create the for loop to iterate through the range starting at min and ending at max and add the values to rangeSum
+
+for (let i = minNum; i <= maxNum; i += 1){
+rangeSum += i
+}
+
+//return rangeSum - the solution 
+
+return rangeSum
+
+//all together
+
+function sumAll(arr) {
+let maxNum = Math.max(arr[0], arr[1]);
+let minNum = Math.min(arr[0], arr[1]);
+let rangeSum = 0;
+for (let i = minNum; i <= maxNum; i += 1){
+rangeSum += i
+}
+return rangeSum
+
+}
+
+console.log(sumAll([1, 4])); //returns 10
+
+
+
+
+//solution rewritten with spread operator to pass true array to function and avoid possible OBOE
+
+
+function sumAll(arr) {
+  let rangeSum = 0;
+  for (let i = Math.min(...arr); i <= Math.max(...arr); i += 1) {
+    rangeSum += i;
+  }
+  return rangeSum;
+}
+
+console.log(sumAll([1, 4])); //returns 10
+
+
+
+
+
+-----------------------------------------------------------------------------------------------------------------------
+
+Diff Two Arrays
+
+//challenge
+
+Diff Two Arrays
+Compare two arrays and return a new array with any items only found in one of the two given arrays, but not both. In other words, return the symmetric difference of the two arrays.
+
+Note: You can return the array with its elements in any order.
+
+function diffArray(arr1, arr2) {
+  const newArr = [];
+  return newArr;
+}
+
+diffArray([1, 2, 3, 5], [1, 2, 3, 4, 5]);
+
+
+
+- Here we need to return one new array with values found in one of the given arrays but not both
+- so our e.g. here diffArray([1, 2, 3, 5], [1, 2, 3, 4, 5]); returns array of [4]
+- it needs to work for numbers, strings and mixed arrays 
+- doesnt look like case sensitivity is an issue 
+- can be in any order, but we can sort if wanted
+
+-make new blank array -> find non-symmetrical values in 2 given arrays -> push values to new blank array -> sort alphanumerically (optional)
+
+
+//solution
+
+//within function create new blank array and return it as solution
+ const newArr = [];
+ return newArr;
+
+// we can .concat our params into this array to make diff easier to identify (only occurs once)
+  const newArr = arr1.concat(arr2);
+
+
+//we could simplify this and not name the var by simply returning
+
+return arr1
+.concat(arr2)
+
+
+
+// we can filter() this array with a new function (item) to get the elements that only occur once and store these in the array
+// we are using the ‘array includes’ command reversed with !, so the pipes denote if the item is not in array 1 or array 2  - note the arrow function and omission of keyword 
+
+.filter(item => !arr1.includes(item) || !arr2.includes(item));
+
+
+//altogether 
+ 
+ function diffArray(arr1, arr2) {
+ return arr1
+.concat(arr2)
+.filter(item => !arr1.includes(item) || !arr2.includes(item));
+
+}
+
+console.log(diffArray([1, 2, 3, 5], [1, 2, 3, 4, 5])); //gives [4]
+
+
+
+
+//alternative solution
+//let's use a for loop to iterate through the arrays and store the values of items that only occur once in a new array
+
+
+//create blank newArr
+
+var newArr = []; 
+
+
+//create a for loop to get values only in one array
+
+for (let i = 0; 
+
+
+
+
+-----------------------------------------------------------------------------------------------------------------------
+
+Seek and Destroy
+
+You will be provided with an initial array (the first argument in the destroyer function), followed by one or more arguments. Remove all elements from the initial array that are of the same value as these arguments.
+
+Note: You have to use the arguments object.
+
+function destroyer(arr) {
+  return arr;
+}
+
+destroyer([1, 2, 3, 1, 2, 3], 2, 3);
+
+
+-We are given an array and then some following arguments of items that will be removed from the array
+-In the above example, 2 and 3 are removed to give us an array of [1,1]
+
+
+//solution
+function destroyer(arr) {
+
+let survivingElements = []
+let battleField = Object.values(arguments) [0];
+let elementsToDestroy = Object.values(arguments).splice(1)
+
+for (let i = 0; i < battleField.length; i += 1) {
+  let positionToRecon = battleField[i];
+  if (elementsToDestroy.indexOf(positionToRecon) === -1) {
+survivingElements.push(positionToRecon)
+  }
+}
+ 
+
+
+  return survivingElements;
+}
+
+console.log(destroyer([1, 2, 3, 1, 2, 3], 2, 3));
+
+//alternative
+
+unction destroyer(arr) {
+  let valsToRemove = Object.values(arguments).slice(1);
+
+  for (let i = 0; i < arr.length; i++) {
+    for (let j = 0; j < valsToRemove.length; j++) {
+      if (arr[i] === valsToRemove[j]) {
+        delete arr[i];
+      }
+    }
+  }
+  return arr.filter(item => item !== null);
+}
+
+
+
+
+
+
+-----------------------------------------------------------------------------------------------------------------------
+
+Wherefore art thou
+
+
+
+Make a function that looks through an array of objects (first argument) and returns an array of all objects that have matching name and value pairs (second argument). Each name and value pair of the source object has to be present in the object from the collection if it is to be included in the returned array.
+
+For example, if the first argument is [{ first: "Romeo", last: "Montague" }, { first: "Mercutio", last: null }, { first: "Tybalt", last: "Capulet" }], and the second argument is { last: "Capulet" }, then you must return the third object from the array (the first argument), because it contains the name and its value, that was passed on as the second argument.
+
+function whatIsInAName(collection, source) {
+  const arr = [];
+  // Only change code below this line
+
+
+  // Only change code above this line
+  return arr;
+}
+
+whatIsInAName([{ first: "Romeo", last: "Montague" }, { first: "Mercutio", last: null }, { first: "Tybalt", last: "Capulet" }], { last: "Capulet" });
+
+
+
+//solution
+
+- we need to run through objects in the first array and see if the first has the same key last:
+- if it has the same key/keys then the values will be checked to match 
+- then we return that object as the answer
+
+//to begin, lets isolate the key/keys  of source using object method
+
+let sourceKeys = Object.keys(source)
+console.log(sourceKeys)
+
+//this will show us the key from the second argument key value pair
+
+//now we can filter the collection to matching objects with
+
+return collection.filter(function(obj))
+console.log(obj)
+}
+
+//filter works and an if statement and for loop in one and pair down the output to matching items 
+//the console log will give us the objects and values in obj one
+
+//now we can return the key of the source key 
+//when we run through it will give us the collection object and the item in source
+//second console log will give us the key value i.e last and montague
+//third value gives us the source key ie the value we are matching
+
+for (let key of sourceKeys){
+	console.log(key)
+	console.log(obj(key))
+	console.log(obj(source[key]))
+
+
+//now the if statement to see if we have match
+//if it does not have the property of key or obj[key] is not equal to the key of the source then we return false and filter it from final array
+//if these things are true 
+
+if (!obj.hasOwnProperty(key)) || obj[key] !== source[key]){
+return false
+}
+
+
+//if the criteria, lets return it as true and add it to the array 
+
+
+//all together
+
+function whatIsInAName(collection, source) {
+let sourceKeys = Object.keys(source)
+//console.log(sourceKeys)
+return collection.filter(function(obj){
+  //console.log(obj)
+  for (let key of sourceKeys){
+    //console.log(key)
+   // console.log(obj[key])
+    //console.log(source[key])
+    if (!obj.hasOwnProperty(key) || obj[key] !== source[key]){
+return false
+
+}
+}
+
+return true
+})
+}
+
+console.log(whatIsInAName([{ first: "Romeo", last: "Montague" }, { first: "Mercutio", last: null }, { first: "Tybalt", last: "Capulet" }], { last: "Capulet" }));
+
+
+
+-----------------------------------------------------------------------------------------------------------------------
+
+
+
+Spinal Tap Case
+
+
+
+Convert a string to spinal case. Spinal case is all-lowercase-words-joined-by-dashes.
+
+
+//challenge 
+
+function spinalCase(str) {
+  return str;
+}
+
+spinalCase('This Is Spinal Tap');
+
+
+//initital thoughts
+-this looks very similar to the create html to url slug encountered before
+-the best way to get that one was make an array and rebuild it and lower case, lets try that 
+
+function spinalCase(str) {
+  
+//return the string with functions applied
+return str
+//split into words array using regex to denote split at the conditions s for whitespace _ underscore and anything followed by uppercase
+  .split((/\s|_|(?=[A-Z])/))
+//now join the individual words with a hyphen
+  .join("-")
+//put them all in lower case
+  .toLowerCase()
+}
+
+//alltogether
+
+
+function spinalCase(str) {
+  return str
+  .split((/\s|_|(?=[A-Z])/))
+  .join("-")
+  .toLowerCase()
+
+}
+
+console.log(spinalCase('This Is Spinal Tap'));
+
+
+-----------------------------------------------------------------------------------------------------------------------
+
+Pig Latin
+
+
+Pig Latin is a way of altering English Words. The rules are as follows:
+
+- If a word begins with a consonant, take the first consonant or consonant cluster, move it to the end of the word, and add ay to it.
+
+- If a word begins with a vowel, just add way at the end.
+
+Translate the provided string to Pig Latin. Input strings are guaranteed to be English words in all lowercase.
+
+function translatePigLatin(str) {
+  return str;
+}
+
+translatePigLatin("consonant");
+
+
+//initial thoughts
+- we are given a string to act on:
+- consonant or cluster (concurrent) at beginning -> end + way
+- vowl at the end -> end + way
+- approach - each word in string can be part of aray - create with split 
+-  looks like we only have single word tests - in this case perhaps we should .split() array by letter
+- array of letters - check letter at front for consonant, then check along for clusters, then move them to the end and add way
+- we can return just + way at the end if a vowel after loop
+- rejoin letters into words and lowercase them for test criteria  
+
+- do we even need an array?
+- rather than splitting the string into an array, we can creat a vowels array and use it for criteria
+
+//solution
+
+//first lets .split into new vowels array
+  
+let vowels = “aeiou”.split("")
+
+
+//next let's iterate through the string with for loop and index
+
+for (let i = 0; i < str.length; i += 1){
+console.log(str[i]) //will show us individual letters - lets put that into a var
+}
+
+
+
+for (let i = 0; i < str.length; i += 1){
+let oneLetter = str[i];
+console.log(vowels.indexOf(oneLetter)
+
+//so far 
+
+
+function translatePigLatin(str) {
+  
+let vowels = "aeiou".split("");
+
+for (let i = 0; i < str.length; i += 1){
+let oneLetter = str[i];
+console.log(vowels.indexOf(oneLetter));
+} 
+return vowels
+}
+
+console.log(translatePigLatin("consonant"));
+
+//the console will show us the index point at which str[i] corresponds to a point in our vowel array  [ 'a', 'e', 'i', 'o', 'u' ]
+
+c -1
+o 3
+n -1
+s -1
+o 3
+n -1
+a 0
+n -1
+t -1
+
+
+//we can turn that console.log into an if statement that says if the indexed letter is a vowel and it's the first letter than we can return the correct + way form
+
+if (vowels.indexOf(oneLetter) != -1 && i===0){
+return str + "way"
+
+
+//we can repurpose this if statement to slice the consonants/clusters from the start and put them on the end of the word with ‘ay’
+
+if (vowels.indexOf(oneLetter) != -1) {
+  return str.slice(i) + str.slice(0, i) + "ay"
+
+
+//now the last case is if the word has no vowels like ryhthm
+//this does not fill eith of our criteria so we can return after these loops with 
+return str + ‘ay’:
+
+
+//all together
+
+
+function translatePigLatin(str) {
+  
+let vowels = "aeiou".split("");
+
+for (let i = 0; i < str.length; i += 1){
+let oneLetter = str[i];
+if (vowels.indexOf(oneLetter) != -1 && i===0) {
+return str + "way";
+}
+if (vowels.indexOf(oneLetter) != -1) {
+  return str.slice(i) + str.slice(0, i) + "ay"
+}
+} 
+return str + "ay";
+}
+
+console.log(translatePigLatin("consonant"));
+
+
+//there is some duplicate code here that could be cleaned up with helper funtion 
+
+
+
+-----------------------------------------------------------------------------------------------------------------------
+
+
+
+Search and Replace
+
+
+Perform a search and replace on the sentence using the arguments provided and return the new sentence.
+
+First argument is the sentence to perform the search and replace on.
+
+Second argument is the word that you will be replacing (before).
+
+Third argument is what you will be replacing the second argument with (after).
+
+Note: Preserve the case of the first character in the original word when you are replacing it. For example if you mean to replace the word Book with the word dog, it should be replaced as Dog
+
+function myReplace(str, before, after) {
+  return str;
+}
+
+myReplace("A quick brown fox jumped over the lazy dog", "jumped", "leaped");
+
+//initial thoughts 
+- we will first have to find the index of the word to be replaced (before)
+- split array could be useful
+-  preserve case - we can use regex to detect cap or not 
+
+//solution
+//array of words
+function myReplace (str, before, after) {
+newArr = str.split(" ")
+return newArr
+}
+console.log(myReplace("A quick brown fox jumped over the lazy dog", "jumped", "leaped"))
+
+
+//now let us use a for loop to iterate through the array
+for (let i = 0; i< newArr.length; i += 1){
+
+
+
+//now the if condition - the item at newArr[i] is the same as the before input
+  if (newArr[i] === before){
+
+
+
+
+//now we can capitalize if first letter of the word we are replacing is upper case 
+
+if (newArr[i][0] == newArr[i][0].toUpperCase()){
+after = after[0].toUpperCase() + after.slice(1);
+
+
+
+//change it to the capitalized after argument
+  newArr[i] = after
+
+
+
+
+//return the array joined together with spaces between words
+return newArr.join(" ")
+
+
+//all together 
+
+
+function myReplace(str, before, after) {
+let newArr = str.split(" ")
+
+for (let i = 0; i< newArr.length; i += 1){
+  if (newArr[i] === before){
+    if (newArr[i][0] == newArr[i][0].toUpperCase()){
+after = after[0].toUpperCase() + after.slice(1);
+  }
+  newArr[i] = after
+}
+}
+return newArr.join(" ")
+}
+
+console.log(myReplace("A quick brown fox jumped over the lazy dog", "jumped", "leaped"))
+
+
+
+passes all tests but 
+
+myReplace("I think we should look up there", "up", "Down") should return the string I think we should look down there.
+
+//i think we have to change our capitalize method 
+
+//I added the else condition and the test works 
+
+ } else {
+    
+    after = after[0].toLowerCase() + after.slice(1);
+
+to fix this 
+
+so all toghether - 
+
+
+function myReplace(str, before, after) {
+let newArr = str.split(" ")
+
+for (let i = 0; i< newArr.length; i += 1){
+  
+  if (newArr[i] === before){
+    
+    if (newArr[i][0] == newArr[i][0].toUpperCase()){
+    
+    after = after[0].toUpperCase() + after.slice(1);
+  
+  } else {
+    
+    after = after[0].toLowerCase() + after.slice(1);
+
+    }
+ 
+  newArr[i] = after
+}
+}
+return newArr.join(" ")
+}
+
+console.log(myReplace("A quick brown fox jumped over the lazy dog", "jumped", "leaped"))
+
+
+
+-----------------------------------------------------------------------------------------------------------------------
+
+
+DNA Pairing
+
+The DNA strand is missing the pairing element. Take each character, get its pair, and return the results as a 2d array.
+
+Base pairs are a pair of AT and CG. Match the missing element to the provided character.
+
+Return the provided character as the first element in each array.
+
+For example, for the input GCG, return [["G", "C"], ["C","G"], ["G", "C"]]
+
+The character and its pair are paired up in an array, and all the arrays are grouped into one encapsulating array.
+
+
+
+
+function pairElement(str) {
+  return str;
+}
+
+pairElement("GCG");
+
+
+//initial thoughts
+- we are given a string as input - always a combo of A C T G
+- the output is a 2d array - the character is paired in an array and these are grouped into a larger array 
+- lets do some reading, it looks like the possible outputs are (['A', ‘T’] or ['C', ‘G') &rev
+- https://en.wikipedia.org/wiki/Base_pair
+
+okay so the base pair of ___ is always
+A -> AT
+T -> TA
+C -> CG
+G -> GC 
+
+
+//so how will we do this?
+
+//create a new empty results array[]
+//split given string into an array
+
+//iterate through this array 
+//for each letter encountered  
+//push the letter and pair letter into an array  
+A -> AT
+T -> TA
+C -> CG
+G -> GC 
+
+//push that pair array into our reslts array
+
+//move onto the next letter in str and do the same
+
+//return the new array 
+
+
+
+
+//solution 
+//empty results array
+ let resultsArr = [];
+
+
+
+
+//new array of str input
+ let strArr = str.split("");
+
+//iterate through array with for loop
+for (let i= 0; i < strArr.length ; i += 1)
+
+
+//maybe a switch case here will be a good way of creating the pair arrays (4 outcomes), it will be cleaner than an if else loop
+//will look something like:
+
+switch (strArr) {
+	case "A"
+		join with T in new array
+		push to results array
+		break;
+	case "T"
+		join with A in new array
+		push to results array
+		break;
+	case "G"
+		join with C in new array
+		push to results array
+		break;
+	case "C"
+		join with G in new array
+		push to results array
+		break;
+	default
+		console.log("No DNA to pair")
+ 
+
+//hmm maybe the switch is too complex here 
+
+
+//this should work right?
+
+switch(strArr){
+  case "A":
+  let pairArray = []
+    //join with T in new array
+    pairArray.push["A", "T"]
+    //push new array into results arr
+    resultsArr.push(pairArray)
+    break;
+
+//so far
+
+function pairElement(str) {
+ let resultsArr = [];
+ let strArr = str.split("");
+ 
+
+ switch(strArr){
+  case "A":
+  let pairArrayA = []
+    //join with T in new array
+    pairArrayA.push["A", "T"]
+    //push new array into results arr
+    resultsArr.push(pairArrayA)
+    break;
+  case "T":
+  let pairArrayT = []
+    //join with A in new array
+    pairArrayT.push["T", "A"]
+    //push new array into results arr
+    resultsArr.push(pairArrayT)
+    break;
+  case "G":
+  let pairArrayG = []
+    //join with C in new array
+    pairArrayG.push["G", "C"]
+    //push new array into results arr
+    resultsArr.push(pairArrayG)
+    break;
+  case "C":
+  let pairArrayC = []
+    //join with G in new array
+    pairArrayC.push["C", "G"]
+    //push new array into results arr
+    resultsArr.push(pairArrayC)
+    break;
+  default:
+  resultsArr.push("No DNA to pair")
+ }
+  
+return resultsArr;
+}
+
+console.log(pairElement("GCG"));
+
+//is returning [ 'No DNA to pair' ] the defualt which means it's not doing the cases
+
+//maybe we can try declaring our pair arrays before the switch 
+
+//or maybe we just need to add a for loop
+
+for (let i = 0; i < strArr.length; i += 1)
+
+
+//its iterating ok but just giving us default case for each - giving us default array.length times
+
+
+ switch(strArr){
+  case strArr[i] == "A" :
+  let pairArrayA = []
+    //join with T in new array
+    pairArrayA.push["A", "T"]
+    //push new array into results arr
+    resultsArr.push(pairArrayA)
+    break;
+
+//let's use if / if /else isntead for more familliar syntax. It's a shame about not getting the switch working with the array but I'll figure it out one day 
+
+
+function pairElement(str) {
+ let resultsArr = [];
+ let strArr = str.split("");
+ 
+for (let i = 0; i < strArr.length; i += 1) {
+
+if (strArr[i] === "A"){
+  resultsArr.push(['A', 'T'])
+}
+else if (strArr[i] === "T"){
+  resultsArr.push(['T', 'A'])
+} 
+else if (strArr[i] === "G"){
+  resultsArr.push(['G', 'C'])
+}
+else if (strArr[i] === "C"){
+  resultsArr.push(["C", "G"])
+}
+
+
+else resultsArr.push("No DNA to pair")
+ 
+}
+  
+return resultsArr;
+}
+
+console.log(pairElement("GCG"));
+
+
+
+//yay - it passes! I think I wasnt using brackets in the switch .push(), I will try again some time 
+
+
+-----------------------------------------------------------------------------------------------------------------------
+
+
+Missing letters
+
+Find the missing letter in the passed letter range and return it.
+
+If all letters are present in the range, return undefined.
+
+function fearNotLetter(str) {
+  return str;
+}
+
+fearNotLetter("abce");
+
+//initial thoughts
+//we are given a string of letters in alphabetic order
+//if there is a letter missing from the range we will return it
+//if all the letters are present we return undefined
+//hmm interesting 
+
+//there is likely a few ways to approach this - the fact that none of our tests ‘loop around’ the alphabet means we could easily make an alphabet array to iterate through and check against 
+
+//that would mean finding the index of the first letter in the string and starting at the same place in an array, moving through it and returning the anomaly
+//it is only ever one letter which complicates things a bit less
+
+//input and output always lower case alphanumeric string
+
+
+//solution
+
+//let's make our lower case alphabet array with
+
+let alphArr = “abcdefghijklmnopqrstuvwxyz”.split("")
+
+//now let's make the for loop through the array starting at the index of the input str so we can compare [i] position values
+
+//wait - I think we need a for loop 
+
+//ok let's find the start position of the string in range and store it to a variable
+
+
+//I'm going to rethink this a bit, so far I have what I thought would be the code to find the starting position but it's returning undefined values.
+
+
+function fearNotLetter(str) {
+
+let alphArr = "abcdefghijklmnopqrstuvwxyz".split("")
+
+for (let i = 0; i < alphArr.length; i += 1){
+  if (alphArr.length[i] === str.length[0]);{
+    let startPos = alphArr.length[i]
+
+console.log(startPos)
+
+  }
+
+  }
+
+}
+ 
+ 
+ 
+ //console.log(alphArr)
+ 
+  //return str;
+
+
+fearNotLetter("abce");
+
+
+
+//let's try without using an arr and just using string lengths
+--code cleared--
+
+
+let alphString = "abcdefghijklmnopqrstuvwxyz"
+
+
+//we can use a different approach to find the starting position 
+
+console.log(alphStr.indexOf(str[0]));
+
+//this will tell us the index position of the first letter of our str input in our alphString, a = 0, b =1, z=27 etc (base 0)
+//lets set this value to our startPos
+
+let startPos = alphString.indexOf(str[0])
+
+//we can view the letter stored in startPos
+console.log(alphString[startPos])
+
+
+//let's now iterate up from that starting position using a for loop
+
+
+
+for (let i = startPos; i < startPos + str.length; i+= 1){
+console.log(alphString[i])
+
+//this will give us all the letters that should be in range ie in alphString 
+//lets save this to var trueRange
+//we can also save the range as a var inputRange
+
+
+
+for (let i = startPos; i < startPos + str.length; i+= 1){
+let trueRange = alphString[i];
+let inputRange = (str[i - startPos])
+
+console.log(trueRange === inputRange)
+
+// the console will now show us whether the ranges are the same at each point 
+//let's use these vars to create an if clause 
+
+ if (trueRange != inputRange){
+    return trueRange;
+  }
+
+//this will give us the answer, trueRange which is alphString[i]
+//let's clean that up into a new answer var 
+
+  if (trueRange != inputRange){
+    let answer = trueRange
+    return answer;
+  }
+
+
+//it passes! 
+
+//all together 
+
+
+function fearNotLetter(str) {
+let alphString = "abcdefghijklmnopqrstuvwxyz"
+let startPos = alphString.indexOf(str[0])
+
+for (let i = startPos; i < startPos + str.length; i+= 1){
+  let trueRange = alphString[i];
+  let inputRange = (str[i - startPos])
+  if (trueRange != inputRange){
+    let answer = trueRange
+    return answer;
+  }
+
+
+}
+
+
+}
+
+console.log(fearNotLetter("bcdf"));
+
+
+
+
+-----------------------------------------------------------------------------------------------------------------------
+
+
+Sorted Union
+
+
+Write a function that takes two or more arrays and returns a new array of unique values in the order of the original provided arrays.
+
+In other words, all values present from all arrays should be included in their original order, but with no duplicates in the final array.
+
+The unique numbers should be sorted by their original order, but the final array should not be sorted in numerical order.
+
+Check the assertion tests for examples.
+
+function uniteUnique(arr) {
+  return arr;
+}
+
+uniteUnique([1, 3, 2], [5, 2, 1, 4], [2, 1]);
+
+
+//initial thoughts 
+
+//input is two or more arrays 
+//returns a new array of unique values in the order of original arrays
+//
+
+//so values that appear in output are all the numbers that appear in the arrays but only one and in order they we inputted - no duplicates 
+
+
+//okay so we will have to create an array with all of the input contents
+
+//unless we do it one at a time, then we can loop around check if the number is already in the array before pushing - this preserves the order too
+
+//so we would create a blank results array
+
+//iterate through the subarrays with a for loop
+
+//if any of the values in the subarray are not already present in the resultsArr then add them
+
+//return the resultsArr
+
+
+
+//solution
+
+//make blank resultsArr
+let resultsArr = [];
+
+
+//for loop to iterate through array index
+
+for (let i = 0; i < arr.length ; i +=1)
+
+  console.log(arr[i])
+
+
+//hmm console is just giving us values of first array - perhaps we need to join array as initially thought
+//lets make the var globArr all the inputs in an array, hopefully in order
+
+let globArr = arr.join(""); 
+
+let globArr = arr
+.join("")
+.split(""); 
+  
+
+//hmm still just giving first array - I think we need to use Object arguments to get all the data 
+
+//console.log(arguments) gives a hint at the bug - the command shows all arrays passed in input
+
+console.log(Object.values(arguments))
+
+//will show us all inputs in one array - lets save this as inputs var inputValues
+
+let inputValues = Object.values(arguments);
+
+
+//change the for loop to go off these values and show the interation in console 
+for (let i = 0; i < inputValues.length ; i +=1){
+console.log(inputValues[i])
+
+gives 
+[ 1, 3, 2 ]
+[ 5, 2, 1, 4 ]
+[ 2, 1 ]
+
+
+
+//great now we are going through each array in order as planned 
+//we will now create a nested loop to go through the individual numbers of each array
+
+ for (let i = 0; i < inputValues.length ; i += 1){
+  for (let j = 0; j < inputValues[i].length; j += 1){
+      console.log(inputValues[i][j])
+  }
+}
+
+//our loop now gives out each number in order, we can save inputValues[i][j] as var oneNum
+
+      let oneNum = inputValues[i][j];
+
+
+//We can use the indexOf function that we used in missing values to see if oneNum is part of resultsArr
+
+      console.log(resultsArr.indexOf(oneNum))
+
+
+// this logs out to -1 for each number as none are present as we have no push function
+//as we push it will loop around an the values will change if it is present in the array and wont get pushed 
+//lets call this another variable inArr
+
+      let inArr = resultsArr.indexOf(oneNum)
+
+
+
+
+//now we need to iterate through each number and if the value = -1 then put it in the array
+
+if (inArr == -1 ) {
+resultsArr.push(oneNum)
+}
+
+//hurrah it works!
+
+
+//alltogether 
+
+
+function uniteUnique(arr) {
+let resultsArr = [];
+let inputValues = Object.values(arguments);
+
+
+
+
+for (let i = 0; i < inputValues.length ; i += 1){
+  for (let j = 0; j < inputValues[i].length; j += 1){
+      let oneNum = inputValues[i][j];
+      let inArr = resultsArr.indexOf(oneNum)
+      //console.log(oneNum)
+      //console.log(inArr)
+
+        if (inArr === -1 ){
+
+          resultsArr.push(oneNum)
+        }
+
+  }
+}
+return resultsArr
+}
+
+let result = uniteUnique([1, 3, 2], [5, 2, 1, 4], [2, 1]);
+console.log(result)
+
+
+
+-----------------------------------------------------------------------------------------------------------------------
+
+
+Convert HTML Entities
+
+
+
+Convert the characters &, <, >, " (double quote), and ' (apostrophe), in a string to their corresponding HTML entities.
+
+
+function convertHTML(str) {
+  return str;
+}
+
+convertHTML("Dolce & Gabbana");
+
+
+//initial thoughts
+//interesting - can I simply use replace() ? 
+
+maybe like this from grasshopper
+
+
+var word = ‘cruise’;
+var sentence = word + ‘ has XX letters’;
+if (sentence.includes('XX')){
+	print(sentence.replace('XX', word.length));
+}
+
+// will return ‘cruise has 6 letters’
+
+//input is a string containing alphanumeric and special characters
+//output is string with spaces, case preserved and special characters converted with
+
+& - &amp;
+< - &lt;
+> - &gt;
+" - &quot;
+' - &apos;
+
+//lets make an empty var for our result and return it
+//lets perform replace functions on the str
+
+
+function convertHTML(str) {
+ let convertedStr = str
+ .replace('&', '&amp;')
+ .replace('<', '&lt;')
+ .replace('>', '&gt;')
+ .replace('"', '&quot;')
+ .replace("'", '&apos;')
+
+return convertedStr
+}
+
+let results = convertHTML("Dolce & Gabbana");
+console.log(results)
+
+
+//this is what we have so far but it is failing a couple of test cases involving lt and quotes -hmmmm
+
+//'Stuff in "quotation marks"' gives us Stuff in &quot;quotation marks" so we can presume it is working but only once for each case.
+
+//to loop it we should... think about it while we go eat some pasta :D
+
+
+//and the fix is in! we must add the regex g tag to get all global occurances 
+
+//though it doesnt look like we can easily add it to what we have
+
+//I was wrong, it was easy to add 
+
+
+//all together 
+
+
+function convertHTML(str) {
+ let convertedStr = str 
+ .replace(/&/g, '&amp;')
+ .replace(/</g, '&lt;')
+ .replace(/>/g, '&gt;')
+ .replace(/"/g, '&quot;')
+ .replace(/'/g, '&apos;')
+ 
+return convertedStr
+}
+
+let results = convertHTML('Stuff in "quotation marks"');
+console.log(results)
+
+
+-----------------------------------------------------------------------------------------------------------------------
+
+
+Sum All Odd Fibonacci Numbers
+
+Given a positive integer num, return the sum of all odd Fibonacci numbers that are less than or equal to num.
+
+The first two numbers in the Fibonacci sequence are 1 and 1. Every additional number in the sequence is the sum of the two previous numbers. The first six numbers of the Fibonacci sequence are 1, 1, 2, 3, 5 and 8.
+
+For example, sumFibs(10) should return 10 because all odd Fibonacci numbers less than or equal to 10 are 1, 1, 3, and 5.
+
+function sumFibs(num) {
+  return num;
+}
+
+sumFibs(4);
+
+//initial thoughts
+//its a bit like facotrialize but we are timesing by odd fibbonacci numbers range up to that sum instead of every int
